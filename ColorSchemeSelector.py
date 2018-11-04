@@ -6,7 +6,7 @@ from random import choice
 class SelectColorSchemeCommand(sublime_plugin.WindowCommand):
     def run(self, **kwargs):
         if int(sublime.version()) > 3000:
-            color_schemes = sublime.find_resources("*.tmTheme")
+            color_schemes = sublime.find_resources("*.tmTheme") + sublime.find_resources("*.sublime-color-scheme")
         else:
             color_schemes = [
                 "All Hallow's Eve",
