@@ -64,7 +64,14 @@ class SelectColorSchemeCommand(sublime_plugin.WindowCommand):
 
     def current_scheme_index(self, color_schemes):
         current_scheme = self.load_settings().get('color_scheme')
-        return [c for c in color_schemes].index(current_scheme)
+        for idx, color_scheme in enumerate(color_schemes):
+            default_scheme = self.default_scheme_path(current_scheme)
+            if color_scheme in (current_scheme, default_scheme):
+                return idx
+        raise ValueError
+
+    def default_scheme_path(self, default_scheme_filename):
+        return os.path.join('Packages', 'Color Scheme - Default', default_scheme_filename)
 
     def set_color_scheme(self, color_scheme_path):
         self.load_settings().set('color_scheme', color_scheme_path)
